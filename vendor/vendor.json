@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "f1Cya7f83KJIkWcYWxT3ZZxDeZc=",
+			"path": "github.com/kylelemons/godebug/pretty",
+			"revision": "eadb3ce320cbab8393bea5ca17bebac3f78a021b",
+			"revisionTime": "2016-04-06T21:19:39Z"
+		},
+		{
+			"checksumSHA1": "1D8GzeoFGUs5FZOoyC2DpQg8c5Y=",
+			"path": "gopkg.in/mgo.v2",
+			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
+			"revisionTime": "2016-08-18T02:01:20Z"
+		}
+	],
+	"rootPath": "github.com/rjeczalik/bsondiff"
+}

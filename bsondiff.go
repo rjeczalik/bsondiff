@@ -9,12 +9,70 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"gopkg.in/mgo.v2/bson"
 )
 
-// Program
+func Diff(old, new map[string]interface{}, out *map[string]interface{}) error {
+	type elem struct {
+		keys []string
+		old  map[string]interface{}
+		new  map[string]interface{}
+	}
+
+	var (
+		cur    elem
+		stack  = []elem{{old: old, new: new}}
+		set    = make(map[string]interface{})
+		unset  = make(map[string]interface{})
+		update = make(map[string]interface{})
+	)
+
+	for len(stack) != 0 {
+		cur, stack = stack[0], stack[1:]
+
+		oldKeys := keys(cur.old)
+
+		for _, oldKey := range oldKeys {
+			v, ok := cur.new[oldKey]
+			if !ok {
+				set(unset, append(cur.keys, oldKey), oldKeys[oldKey])
+				continue
+			}
+		}
+	}
+
+	return nil
+}
+
+func keys(m map[string]interface{}) []string {
+	keys := make([]string, 0, len(m))
+
+	for k := range m {
+		keys = append(keys, k)
+	}
+
+	sort.Strings(keys)
+
+	return keys
+}
+
+func set(m map[string]interface{}, k []string, v interface{}) {
+	for _, k := range k[:len(k)-1] {
+		mm, ok = m[k].(map[string]interface{})
+		if !ok {
+			mm = make(map[string]interface{})
+			m[k] = mm
+		}
+
+		m = mm
+	}
+
+	m[len(k)-1] = v
+}
+
 type Program struct {
 	JSON   bool
 	Stdout io.Writer

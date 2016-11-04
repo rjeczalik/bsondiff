@@ -1,6 +1,7 @@
 package bsondiff
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -96,6 +97,10 @@ func (p *Program) readCollections(files ...string) (map[string]interface{}, erro
 		p, err := ioutil.ReadFile(file)
 		if err != nil {
 			return nil, err
+		}
+
+		if len(bytes.TrimSpace(p)) == 0 {
+			continue
 		}
 
 		var v interface{}

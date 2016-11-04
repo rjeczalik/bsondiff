@@ -65,13 +65,13 @@ func (p *Program) readFiles(path string) (files []string, err error) {
 	}
 
 	if fi.IsDir() {
-		fis, err := ioutil.ReadDir(fi.Name())
+		fis, err := ioutil.ReadDir(path)
 		if err != nil {
 			return nil, err
 		}
 
 		for _, fi := range fis {
-			files = append(files, fi.Name())
+			files = append(files, filepath.Join(path, fi.Name()))
 		}
 	} else {
 		files = append(files, path)

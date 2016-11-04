@@ -11,10 +11,10 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/kylelemons/godebug/pretty"
 	"gopkg.in/mgo.v2/bson"
 )
 
-// Program
 type Program struct {
 	JSON   bool
 	Stdout io.Writer
@@ -53,7 +53,7 @@ func (p *Program) Run(f *flag.FlagSet, args []string) error {
 		return fmt.Errorf("reading %q: %s", f.Arg(1), err)
 	}
 
-	_, _ = oldCols, newCols
+	fmt.Fprintln(p.Stdout, pretty.Compare(oldCols, newCols))
 
 	return nil
 }
